@@ -1,0 +1,181 @@
+server:
+  port: 81
+
+logging:
+  level:
+    root: info
+    org.springframework.web: info
+    com.java.test: info
+
+kafka:
+  consumer:
+    topic: test
+    groupId: mqtt_busi_servera
+    servers: 101.37.76.196:9092
+    autoOffsetReset: latest
+    autoCommit: false
+    pollTimeout: 1500
+    sessionTimeout: 6000
+    heartbeatInterval: 1000
+    concurrency: 1
+    maxPollRecords: 300
+  producer:
+    servers: 101.37.76.196:9092
+    retries: 0
+    batchSize: 4096
+    linger: 1
+    bufferMemory: 40960
+
+baidu:
+  clientId: k7OwbquswvgjhADZnRxLDa3R
+  clientSecret: L0NOLmefrfV4fsVTot1i3hQhkBI6kqPj
+
+jpush:
+  appKey: 4f3384b149a94e3a713b7372
+  masterSecret: faac73e7206593ade3946893
+  liveTime: 300000
+
+value:
+  test: 123
+
+spring:
+  application:
+    name: Test
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+  data:
+    mongodb:
+      #username: family
+      #password: family@2018
+      #host: 47.96.169.127
+      host: 127.0.0.1
+      port: 27017
+      database: db_test
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    name: druid
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/db_family?tinyInt1isBit=false&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: 123456
+    druid:
+      initialSize: ${datasource_druid_initialSize:5}
+      minIdle: ${datasource_druid_minIdle:5}
+      maxActive: ${datasource_druid_maxActive:50}
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM dual
+      testWhileIdle: true
+      testOnBorrow: true
+      testOnReturn: false
+      filters: stat,wall,log4j
+  jpa:
+    properties.hibernate.hbm2ddl.auto: none
+#  cloud:
+#    sentinel:
+#      transport:
+#        port: 8719
+#        dashboard: localhost:8080
+#        client-ip: localhost
+
+#csp:
+#  sentinel:
+#    api:
+#      port: 8719
+#    dashboard:
+#      service: 127.0.0.1:8080
+
+instorage:
+  mail:
+    smtpServer: smtp.yeah.net
+    account: yzm_yang@yeah.net
+    password: AUHTFHSGSDPWMHZY
+    nickName: yzm_yang
+    to: 1439976144@qq.com
+
+platform.cache:
+  #redisson 配置
+  redisson:
+    singleServerConfig:
+      address: ${redis.address:redis://127.0.0.1:6379}
+      database: 0
+    codec:
+      class: org.redisson.codec.FstCodec
+    threads: 0
+    nettyThreads: 0
+    useLinuxNativeEpoll: false
+
+
+# quartz集群配置 http://www.quartz-scheduler.org/documentation/quartz-2.3.0/configuration/
+#org.quartz:
+#  scheduler:
+#    #调度标识名 集群中每一个实例都必须使用相同的名称
+#    instanceName: DefaultQuartzScheduler
+#    #ID设置为自动获取 每一个必须不同
+#    instanceId: AUTO
+#    makeSchedulerThreadDaemon: true
+#  threadPool:
+#    #线程池的实现类（一般使用SimpleThreadPool即可满足需求）
+#    class: org.quartz.simpl.SimpleThreadPool
+#    #指定在线程池里面创建的线程是否是守护线程
+#    makeThreadsDaemons: true
+#    #指定线程数，至少为1（无默认值）
+#    threadCount: 10
+#    #设置线程的优先级（最大为java.lang.Thread.MAX_PRIORITY 10，最小为Thread.MIN_PRIORITY 1，默认为5）
+#    threadPriority: 5
+#  jobStore:
+#    #数据保存方式为数据库持久化
+#    class: org.quartz.impl.jdbcjobstore.JobStoreTX
+#    #数据库代理类，一般org.quartz.impl.jdbcjobstore.StdJDBCDelegate可以满足大部分数据库
+#    driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+#    #表的前缀，默认QRTZ_
+#    tablePrefix: QRTZ_
+#    #是否加入集群
+#    isClustered: true
+#    # 信息保存时间（毫秒） 默认值60秒
+#    misfireThreshold: 25000
+#    dataSource: myDS
+#  dataSource.myDS:
+#    driver: com.mysql.jdbc.Driver
+#    URL: jdbc:mysql://127.0.0.1:3306/db_family?tinyInt1isBit=false&useUnicode=true&characterEncoding=UTF-8
+#    user: root
+#    password: 123456
+#    maxConnections: 50
+#
+## quartz集群配置 http://www.quartz-scheduler.org/documentation/quartz-2.3.0/configuration/
+#platform.quartz:
+#  #调度标识名 集群中每一个实例都必须使用相同的名称
+#  schedulerInstanceName: JavaTestQuartzScheduler
+#  #ID设置为自动获取 每一个必须不同
+#  schedulerInstanceId: AUTO
+#  schedulerMakeSchedulerThreadDaemon: true
+#  #线程池的实现类（一般使用SimpleThreadPool即可满足需求）
+#  threadPoolClass: org.quartz.simpl.SimpleThreadPool
+#  #指定在线程池里面创建的线程是否是守护线程
+#  threadPoolMakeThreadsDaemons: true
+#  #指定线程数，至少为1（无默认值）(一般设置为1-100直接的整数合适)
+#  threadPoolThreadCount: 10
+#  #设置线程的优先级（最大为java.lang.Thread.MAX_PRIORITY 10，最小为Thread.MIN_PRIORITY 1，默认为5）
+#  threadPoolThreadPriority: 5
+#  #数据保存方式为数据库持久化
+#  jobStoreClass: org.quartz.impl.jdbcjobstore.JobStoreTX
+#  #数据库代理类，一般org.quartz.impl.jdbcjobstore.StdJDBCDelegate可以满足大部分数据库
+#  jobStoreDriverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+#  #表的前缀，默认QRTZ_
+#  jobStoreTablePrefix: QRTZ_
+#  #是否加入集群
+#  jobStoreIsClustered: true
+#  # 信息保存时间（毫秒） 默认值60秒
+#  jobStoreMisfireThreshold: 60000
+#  jobStoreDataSource: myDS
+#  dataSourceDriver: com.mysql.jdbc.Driver
+#  dataSourceUrl: jdbc:mysql://127.0.0.1:3306/db_family?tinyInt1isBit=false&useUnicode=true&characterEncoding=UTF-8
+#  dataSourceUser: root
+#  dataSourcePassword: 123456
+#  dataSourceMaxConnections: 50
