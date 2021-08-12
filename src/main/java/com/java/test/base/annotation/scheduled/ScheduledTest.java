@@ -1,21 +1,13 @@
 package com.java.test.base.annotation.scheduled;
 
-import jodd.util.PropertiesUtil;
 import lombok.extern.log4j.Log4j;
-import org.apache.commons.lang3.StringUtils;
-import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor;
-import org.springframework.scheduling.config.ScheduledTask;
-import org.springframework.scheduling.support.ScheduledMethodRunnable;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -98,33 +90,33 @@ public class ScheduledTest {
 //        log.info("超时未支付订单定时任务结束");
 //    }
 
-    /**
-     * V4
-     * 小耶哥
-     * 小耶哥生产环境也是使用的这一套
-     */
-    @Scheduled(cron = "0/10 * * * * ?")
-    public void closePaymentOrderTaskV4() {
-        RLock lock = redissonClient.getLock(REDIS_LOCK_NAME);
-        boolean getLock = false;
-        try {
-            if (getLock = lock.tryLock(0, 50, TimeUnit.SECONDS)) {
-                log.info("Redisson获取到分布式锁->{Scheduled},ThreadName->{" + Thread.currentThread().getName() + "}");
-                // TODO 此处直接调用service方法
-                log.info("小耶哥是最帅的, lockName->{Scheduled}, ThreadName->{" + Thread.currentThread().getName() + "}");
-            } else {
-                log.info("Redisson没有获取到分布式锁->{Scheduled},ThreadName->{" + Thread.currentThread().getName() + "}");
-            }
-        } catch (InterruptedException e) {
-            log.error("Redisson分布式锁获取异常", e);
-        } finally {
-            if (!getLock) {
-                return;
-            }
-            lock.unlock();
-            log.info("Redisson分布式锁释放锁");
-        }
-    }
+//    /**
+//     * V4
+//     * 小耶哥
+//     * 小耶哥生产环境也是使用的这一套
+//     */
+//    @Scheduled(cron = "0/10 * * * * ?")
+//    public void closePaymentOrderTaskV4() {
+//        RLock lock = redissonClient.getLock(REDIS_LOCK_NAME);
+//        boolean getLock = false;
+//        try {
+//            if (getLock = lock.tryLock(0, 50, TimeUnit.SECONDS)) {
+//                log.info("Redisson获取到分布式锁->{Scheduled},ThreadName->{" + Thread.currentThread().getName() + "}");
+//                // TODO 此处直接调用service方法
+//                log.info("小耶哥是最帅的, lockName->{Scheduled}, ThreadName->{" + Thread.currentThread().getName() + "}");
+//            } else {
+//                log.info("Redisson没有获取到分布式锁->{Scheduled},ThreadName->{" + Thread.currentThread().getName() + "}");
+//            }
+//        } catch (InterruptedException e) {
+//            log.error("Redisson分布式锁获取异常", e);
+//        } finally {
+//            if (!getLock) {
+//                return;
+//            }
+//            lock.unlock();
+//            log.info("Redisson分布式锁释放锁");
+//        }
+//    }
 
 //    /**
 //     * 通过 ScheduledAnnotationBeanPostProcessor 终止所有定时任务
@@ -146,5 +138,15 @@ public class ScheduledTest {
 //        }
 //
 //    }
+
+    @Scheduled(cron = "0/10 * * * * ?")
+    public void test1() {
+        System.out.println(1);
+    }
+
+    @Scheduled(cron = "0/10 * * * * ?")
+    public void test2() {
+        System.out.println(2);
+    }
 
 }
