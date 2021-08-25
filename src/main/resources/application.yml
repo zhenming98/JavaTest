@@ -57,9 +57,12 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     name: druid
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/db_family?tinyInt1isBit=false&useUnicode=true&characterEncoding=UTF-8
+    #    url: jdbc:mysql://127.0.0.1:3306/db_family?tinyInt1isBit=false&useUnicode=true&characterEncoding=UTF-8
+    #    username: root
+    #    password: 123456
+    url: jdbc:mysql://106.52.19.210:3306/db_family?tinyInt1isBit=false&useUnicode=true&characterEncoding=UTF-8
     username: root
-    password: 123456
+    password: emptyhead
     druid:
       initialSize: ${datasource_druid_initialSize:5}
       minIdle: ${datasource_druid_minIdle:5}
