@@ -193,4 +193,12 @@ public class JavaTest {
         System.out.println(d > 10);
     }
 
+    @Test
+    public void test10() {
+        String s1 = "123";
+//        s1 = s1 + 1;
+        s1 += 1;
+        System.out.println(s1);
+    }
+
 }
