@@ -199,6 +199,9 @@ public class JavaTest {
 //        s1 = s1 + 1;
         s1 += 1;
         System.out.println(s1);
+
+        double d = 5 / 2;
+        System.out.println(d);
     }
 
 }
