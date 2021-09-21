@@ -204,4 +204,13 @@ public class JavaTest {
         System.out.println(d);
     }
 
+
+    @Test
+    public void test11(){
+        Random random = new Random(System.currentTimeMillis());
+        for (int i = 0; i < 6; i++) {
+            System.out.print((random.nextInt(6) + 1) + "   ");
+        }
+    }
+
 }
