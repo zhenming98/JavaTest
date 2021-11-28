@@ -29,6 +29,7 @@ public class OkHttpUtil {
     private static final Logger logger = LoggerFactory.getLogger(OkHttpUtil.class);
     private static final OkHttpClient CLIENT = new OkHttpClient();
 
+
     /**
      * get 请求
      *
@@ -70,6 +71,7 @@ public class OkHttpUtil {
         return doHttpRequest(request);
     }
 
+
     /**
      * post 请求， 请求参数 并且 携带文件上传
      *
@@ -91,28 +93,6 @@ public class OkHttpUtil {
                 .url(url)
                 .headers(headers)
                 .post(multipartBody)
-                .build();
-
-        return doHttpRequest(request);
-    }
-
-    /**
-     * JSON数据格式请求
-     *
-     * @param url
-     * @param header
-     * @param json
-     * @return
-     */
-    public static String json(String url, Map<String, Object> header, String json) throws IOException {
-
-        // application/octet-stream
-        RequestBody requestBody = FormBody.create(MediaType.parse("application/json"), json);
-
-        Request request = new Request.Builder()
-                .url(url)
-                .headers(buildHeaders(header))
-                .post(requestBody)
                 .build();
 
         return doHttpRequest(request);
@@ -145,30 +125,6 @@ public class OkHttpUtil {
         return doHttpRequest(request);
     }
 
-    /**
-     * post 请求
-     *
-     * @param url
-     * @param parameter 参数
-     * @return
-     * @throws Exception
-     */
-    public static String doPost(String url, Map<String, Object> parameter) throws Exception {
-        return doPost(url, Maps.newHashMap(), parameter, null, null);
-    }
-
-    /**
-     * post请求  参数JSON格式
-     *
-     * @param url
-     * @param header 请求头
-     * @param json   JSON数据
-     * @return
-     * @throws IOException
-     */
-    public static String doPost(String url, Map<String, Object> header, String json) throws IOException {
-        return json(url, header, json);
-    }
 
     /**
      * post请求  参数JSON格式
@@ -179,19 +135,19 @@ public class OkHttpUtil {
      * @throws IOException
      */
     public static String doPost(String url, String json) throws IOException {
-        return json(url, Maps.newHashMap(), json);
+        return doPost(url, Maps.newHashMap(), json);
     }
 
     /**
-     * post 请求  携带文件上传
+     * post 请求
      *
      * @param url
-     * @param file
+     * @param parameter 参数
      * @return
      * @throws Exception
      */
-    public static String doPost(String url, File file, String fileFormName) throws Exception {
-        return doPost(url, Maps.newHashMap(), Maps.newHashMap(), file, fileFormName);
+    public static String doPost(String url, Map<String, Object> parameter) throws Exception {
+        return doPost(url, Maps.newHashMap(), parameter, null, null);
     }
 
     /**
@@ -206,6 +162,45 @@ public class OkHttpUtil {
     public static String doPost(String url, Map<String, Object> header, Map<String, Object> parameter) throws Exception {
         return doPost(url, header, parameter, null, null);
     }
+
+    /**
+     * post请求  参数JSON格式
+     *
+     * @param url
+     * @param header 请求头
+     * @param json   JSON数据
+     * @return
+     * @throws IOException
+     */
+    public static String doPost(String url, Map<String, Object> header, String json) throws IOException {
+        // application/octet-stream
+        RequestBody requestBody = FormBody.create(MediaType.parse("application/json"), json);
+
+        Request request = new Request.Builder()
+                .url(url)
+                .headers(buildHeaders(header))
+                .post(requestBody)
+                .build();
+
+        return doHttpRequest(request);
+    }
+
+
+
+    /**
+     * post 请求  携带文件上传
+     *
+     * @param url
+     * @param file
+     * @return
+     * @throws Exception
+     */
+    public static String doPost(String url, File file, String fileFormName) throws Exception {
+        return doPost(url, Maps.newHashMap(), Maps.newHashMap(), file, fileFormName);
+    }
+
+
+
 
     /**
      * 请求
@@ -239,9 +234,7 @@ public class OkHttpUtil {
     }
 
     private static MultipartBody buildMultipartBody(Map<String, Object> parameter, byte[] fileByte, File file, String fileFormName, String fileName) {
-
         MultipartBody.Builder builder = new MultipartBody.Builder();
-
         // 状态请求参数
         Iterator<Map.Entry<String, Object>> queryIterator = parameter.entrySet().iterator();
         queryIterator.forEachRemaining(e -> builder.addFormDataPart(e.getKey(), (String) e.getValue()));
